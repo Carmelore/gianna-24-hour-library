@@ -104,15 +104,16 @@ public class Main {
 							        Date tomorrow = calendar.getTime();
 							         
 							        if(tomorrow.after(today) == true){
+                        // ===>> TODO: Fix diff, not quite right <<===
 							        	long diff = today.getTime() - tomorrow.getTime();
 							        	System.out.println("This book was returned " + diff + " days late. Your account will be disabled until the fine is paid.");
-							        	users.get(j).setBanned(true);
+							        	users.get(i).setBanned(true);
 
                         System.out.println("Would you like to pay now?\n a)yes\n b)no\n");
                         String pay = sc.nextLine();
                         if(pay.toLowerCase().equals("a")) {
                             System.out.println("The late fee is" + diff*0.1);
-                            users.get(j).setBanned(false);
+                            users.get(i).setBanned(false);
                             System.out.println("Thank you! Your account is no longer disabled.");
                             }  else if(pay.toLowerCase().equals("b")) {
                               System.out.println("Your account will remain disabled.");
@@ -156,7 +157,7 @@ private static void userEntersA (int i) {
                               System.out.println("You have signed out " + books.get(j).getTitle());
 
                                       
-                                        
+                                       // ===>> TODO: fix due date <<===
                                         Calendar cal  = Calendar.getInstance();
                                         int currentDay = cal.get(Calendar.DAY_OF_WEEK);
                                         int leftDays= Calendar.SUNDAY - currentDay;
@@ -178,17 +179,18 @@ private static void userEntersA (int i) {
 							  }
 }
 
-private static void borrowReturn() {
-		
+  private static void borrowReturn() {
     System.out.println("Hello! Do you have an existing account with our library?\n a)yes\n b)no\n");
 		String yesno = sc.nextLine();
 
-
-		if (yesno.toLowerCase().equals("a") || yesno.toLowerCase().equals("yes")) {
+    if (yesno.toLowerCase().equals("b") || users.size() < 1) {
+      System.out.println("You need to create an account to borrow books. Create an account through choice e on the main menu.");
+    }
+		else if (yesno.toLowerCase().equals("a") || yesno.toLowerCase().equals("yes")) {
 			System.out.println("Please enter your phone number");
 			int number = Integer.parseInt(sc.nextLine());
 
-      for (int i = 0; i < users.size(); i ++) {
+      for (int i = 0; i < users.size(); i++) {
 				if (number == users.get(i).getPhoneNumber()) {
 					System.out.println("Enter your password");
 					String pass = sc.nextLine();
@@ -218,11 +220,7 @@ private static void borrowReturn() {
 					System.out.println("This number is not registered in the system. Please try again.");
 				}
 			}
-      
     }
-      else {
-        System.out.println("You need to create an account to borrow books. Create an account through choice e on the main menu.");
-      }
   }
 		
 	private static void findUserInfo() {
@@ -231,6 +229,7 @@ private static void borrowReturn() {
 		if (accountExist.toLowerCase().equals("a") || accountExist.toLowerCase().equals("yes")) {
 			System.out.println("Please enter your phone number");
 			int number = Integer.parseInt(sc.nextLine());
+      // ===>> TODO: don't print "not registered in system" message every `for` loop <<===
 			for (int i = 0; i < users.size(); i ++) {
 				if (number == users.get(i).getPhoneNumber()) {
 					System.out.println("Enter your password");
@@ -313,6 +312,7 @@ private static void borrowReturn() {
 				}
 			}
 			else {
+        // ===>> TODO: don't print this every iteration of the loop <<===
 				System.out.println("This book does not exist in our library. Try again, and pay attention to spelling!");
 			}
 		}
@@ -323,7 +323,7 @@ private static void borrowReturn() {
 		System.out.println("Please follow the instructions given in order to create your account.\n Enter your phone number");
 		int userPhone = Integer.parseInt(sc.nextLine());
 		for (int i = 0; i < users.size(); i ++) {
-			if(userPhone == users.get(i).getPhoneNumber());{
+			if(userPhone == users.get(i).getPhoneNumber()) {
 				System.out.println("This number has already been used to create another account. Please enter another number.");
 			}
 		}
